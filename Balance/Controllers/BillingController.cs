@@ -22,28 +22,6 @@ namespace Balance.Controllers
             }
         }
 
-        //[HttpGet]
-        //public IEnumerable<Billings> Get()
-        //{
-        //    DBGetBilling();
-        //    return billings;
-        //}
-
-        //[HttpGet("{id}")]
-        //public IActionResult Get(int id)
-        //{
-        //    DBGetBilling();
-
-        //    var billing = billings.Where(p => p.user_id == id);
-
-        //    if(billing == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(billing);
-        //}
-
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
