@@ -29,6 +29,11 @@ namespace Balance.Controllers
 
             var billing = billings.Where(p => p.user_id == id);
 
+            if(billing.Count() < 1)
+            {
+                return NotFound();
+            }
+
             decimal res = 0;
             foreach(Billings tempBilling in billing)
             {
@@ -58,14 +63,20 @@ namespace Balance.Controllers
                 return BadRequest(ModelState);
             }
 
-            DBConnect.InsertData("INSERT INTO Billings (user_id, billing_type, billing_sum) VALUES ('"+id+"', '1', '"+sum+"')");
+            DBGetBilling();
+            var billing = billings.Where(p => p.user_id == id);
+            if (billing.Count() < 1)
+            {
+                return NotFound();
+            }
+
+            DBConnect.InsertData("INSERT INTO Billings (user_id, billing_type, billing_sum) VALUES ('" + id + "', '1', '" + sum + "')");
+
             return Ok();
         }
 
         [HttpPost("AddMoney")]
-        public IActionResult PostBody([FromBody] int id, decimal sum) => Post(id, sum);
-
-
+        public IActionResult PostBody([FromBody] Billings billing) => Post(billing.user_id, billing.billing_sum);
 
         //public IActionResult Index()
         //{
