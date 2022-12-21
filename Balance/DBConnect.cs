@@ -25,6 +25,20 @@ namespace Balance
             connection.Close();
         }
 
+        public static int InsertData(string expression, bool returnId)
+        {
+            var connection = Connect();
+            string sqlExpression = expression;
+            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            command.ExecuteNonQuery();
+            command.CommandText = "SELECT SCOPE_IDENTITY()";
+            SqlDataReader reader = command.ExecuteReader();
+            reader.Read();
+            int id = Convert.ToInt32(reader.GetValue(0));
+            connection.Close();
+            return id;
+        }
+
         public static DataSet GetData(string expression)
         {
             var connection = Connect();
